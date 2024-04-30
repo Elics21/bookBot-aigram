@@ -2,7 +2,7 @@ import os
 import sys
 
 BOOK_PATH = "book/book.txt"
-PAGE_SIZE = 1050
+PAGE_SIZE = 100
 
 book: dict[int, str] = {}
 
@@ -22,12 +22,22 @@ def _get_part_text(text: str, start: int, size: int) -> tuple[str, int]:
     part = crop_text[:index]
     return (part, len(part))
 
-text = 'Раз. Два. Три. Четыре. Пять. Прием!'
-print(*_get_part_text(text, 5, 9), sep='\n')
-
 # Функция, формирующая словарь книги
 def prepare_book(path: str) -> None:
-    pass
+    with open(path, 'rt', encoding='utf-8') as f:
+        text: str = f.read().strip()
+        len_text = len(text)
+        start = 0
+        index = 1
+        while len_text > 0:
+            part = _get_part_text(text, start, PAGE_SIZE)
+            book[index] = part[0].lstrip()
+            index += 1
+            start += part[1]
+            len_text -= part[1]
 
 # Вызов функции prepare_book для подготовки книги из текстового файла
-prepare_book(os.path.join(sys.path[0], os.path.normpath(BOOK_PATH)))
+prepare_book(os.path.join(sys.path[1], os.path.normpath(BOOK_PATH)))
+
+for i, txt in book.items():
+    print(i, txt)
