@@ -2,7 +2,7 @@ import os
 import sys
 
 BOOK_PATH = "book/book.txt"
-PAGE_SIZE = 100
+PAGE_SIZE = 1050
 
 book: dict[int, str] = {}
 
@@ -38,6 +38,3 @@ def prepare_book(path: str) -> None:
 
 # Вызов функции prepare_book для подготовки книги из текстового файла
 prepare_book(os.path.join(sys.path[1], os.path.normpath(BOOK_PATH)))
-
-for i, txt in book.items():
-    print(i, txt)
